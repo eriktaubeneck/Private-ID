@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  company:
+    build: .
+    ports:
+      - "10009:10009"
+    command: cargo run --bin private-id-server -- --host 0.0.0.0:10009 --input etc/example/email_company.csv --stdout --tls-dir etc/example/dummy_certs
+  partner:
+    build: .
+    command: cargo run --bin private-id-client -- --company company:10009 --input etc/example/email_partner.csv --stdout --tls-dir etc/example/dummy_certs
